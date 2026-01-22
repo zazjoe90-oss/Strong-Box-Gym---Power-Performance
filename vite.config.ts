@@ -4,10 +4,11 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   define: {
+    // Stringify the API key to ensure it is injected as a valid JS string
     'process.env.API_KEY': JSON.stringify(process.env.API_KEY || '')
   },
-  server: {
-    port: 3000,
-    open: true
+  build: {
+    outDir: 'dist',
+    sourcemap: false
   }
 });

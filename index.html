@@ -14,6 +14,7 @@
       background-color: #09090b;
       color: #f4f4f5;
       margin: 0;
+      padding: 0;
     }
     h1, h2, h3, h4, .font-oswald {
       font-family: 'Oswald', sans-serif;
@@ -32,24 +33,28 @@
     .text-glow {
       text-shadow: 0 0 10px rgba(220, 38, 38, 0.5);
     }
+    #root {
+      min-height: 100vh;
+    }
   </style>
 <script type="importmap">
 {
   "imports": {
-    "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
+    "react/": "https://esm.sh/react@^19.2.3/",
     "@google/genai": "https://esm.sh/@google/genai@^1.38.0",
     "react-router-dom": "https://esm.sh/react-router-dom@^7.12.0",
-    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2",
     "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
-    "vite": "https://esm.sh/vite@^7.3.1"
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.2"
   }
 }
 </script>
 </head>
 <body class="custom-scrollbar">
   <div id="root"></div>
-  <script type="module" src="./index.tsx"></script>
+  <!-- Vite will automatically resolve this path from your project root -->
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
