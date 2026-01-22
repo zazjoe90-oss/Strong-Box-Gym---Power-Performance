@@ -1,8 +1,5 @@
 {
   "name": "Strong Box Gym - Power & Performance",
   "description": "A high-performance gym website featuring class schedules, memberships, trainer profiles, and an AI workout assistant powered by Gemini.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
+  "requestFramePermissions": []
 }
