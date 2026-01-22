@@ -10,7 +10,35 @@ export const translations = {
       memberships: 'Memberships',
       planner: 'AI Coach',
       blog: 'Journal',
-      join: 'Join Now'
+      join: 'Join Now',
+      menu: 'Menu',
+      groups: {
+        about: 'ABOUT',
+        community: 'COMMUNITY',
+        members: 'MEMBERS',
+        programs: 'PROGRAMS',
+        getInTouch: 'GET IN TOUCH'
+      },
+      items: {
+        whySbx: 'Why SBX',
+        ourTeam: 'Our Team',
+        ourBlog: 'Our Blog',
+        successStories: 'Success Stories',
+        privacy: 'Privacy Policy',
+        terms: 'Terms and Conditions',
+        events: 'Events',
+        insta: 'Instagram',
+        fb: 'Facebook',
+        becomeMember: 'Become a Member',
+        quwwa: 'QUWWA | S and C',
+        sbxFit: 'SBX Fit',
+        hybrid: 'Hybrid',
+        pt: 'Personal Training',
+        corporate: 'Corporate Wellness',
+        contact: 'Contact Us',
+        taster: 'SBX Taster Class',
+        follow: 'Follow Us'
+      }
     },
     hero: {
       tag: 'Premier High Performance Gym',
@@ -115,7 +143,35 @@ export const translations = {
       memberships: 'العضويات',
       planner: 'مدرب الذكاء الاصطناعي',
       blog: 'المدونة',
-      join: 'اشترك الآن'
+      join: 'اشترك الآن',
+      menu: 'القائمة',
+      groups: {
+        about: 'عن النادي',
+        community: 'المجتمع',
+        members: 'الأعضاء',
+        programs: 'البرامج',
+        getInTouch: 'تواصل معنا'
+      },
+      items: {
+        whySbx: 'لماذا SBX؟',
+        ourTeam: 'فريقنا',
+        ourBlog: 'مدونتنا',
+        successStories: 'قصص النجاح',
+        privacy: 'سياسة الخصوصية',
+        terms: 'الشروط والأحكام',
+        events: 'الفعاليات',
+        insta: 'إنستغرام',
+        fb: 'فيسبوك',
+        becomeMember: 'كن عضواً',
+        quwwa: 'قوة | S and C',
+        sbxFit: 'SBX فيت',
+        hybrid: 'هايبريد',
+        pt: 'تدريب شخصي',
+        corporate: 'عافية الشركات',
+        contact: 'اتصل بنا',
+        taster: 'حصة تذوق SBX',
+        follow: 'تابعنا'
+      }
     },
     hero: {
       tag: 'نادي النخبة للأداء العالي',

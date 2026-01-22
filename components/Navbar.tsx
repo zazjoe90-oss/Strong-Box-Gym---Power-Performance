@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Dumbbell, Globe, ArrowRight } from 'lucide-react';
+import { Menu, X, Dumbbell, Globe, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 const Navbar: React.FC = () => {
@@ -15,19 +15,67 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Close mobile menu on route change
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isOpen]);
+
   useEffect(() => setIsOpen(false), [location]);
 
-  const navLinks = [
-    { name: t.nav.home, path: '/' },
-    { name: t.nav.schedule, path: '/schedule' },
-    { name: t.nav.locations, path: '/locations' },
-    { name: t.nav.trainers, path: '/trainers' },
-    { name: t.nav.planner, path: '/planner' },
+  const menuGroups = [
+    {
+      title: t.nav.groups.about,
+      items: [
+        { name: t.nav.home, path: '/' },
+        { name: t.nav.items.whySbx, path: '/#philosophy' },
+        { name: t.nav.items.ourTeam, path: '/trainers' },
+        { name: t.nav.items.ourBlog, path: '/blog' },
+        { name: t.nav.items.successStories, path: '/blog' },
+        { name: t.nav.items.privacy, path: '#' },
+        { name: t.nav.items.terms, path: '#' },
+      ]
+    },
+    {
+      title: t.nav.groups.community,
+      items: [
+        { name: t.nav.items.events, path: '/schedule' },
+        { name: t.nav.items.insta, path: 'https://instagram.com' },
+        { name: t.nav.items.fb, path: 'https://facebook.com' },
+      ]
+    },
+    {
+      title: t.nav.groups.members,
+      items: [
+        { name: t.nav.items.becomeMember, path: '/memberships' },
+      ]
+    },
+    {
+      title: t.nav.groups.programs,
+      items: [
+        { name: t.nav.schedule, path: '/schedule' },
+        { name: t.nav.items.quwwa, path: '/schedule' },
+        { name: t.nav.items.sbxFit, path: '/schedule' },
+        { name: t.nav.items.hybrid, path: '/schedule' },
+        { name: t.nav.items.pt, path: '/trainers' },
+        { name: t.nav.items.corporate, path: '/memberships' },
+      ]
+    },
+    {
+      title: t.nav.groups.getInTouch,
+      items: [
+        { name: t.nav.items.contact, path: '/locations' },
+        { name: t.nav.items.taster, path: '/locations' },
+        { name: t.nav.items.follow, path: '/#footer' },
+      ]
+    }
   ];
 
   return (
-    <nav className={`fixed w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-zinc-950/90 backdrop-blur-xl border-b border-white/5 py-3' : 'bg-transparent py-6'}`}>
+    <nav className={`fixed w-full z-[100] transition-all duration-500 ${scrolled || isOpen ? 'bg-zinc-950 border-b border-white/5 py-3' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse group relative">
@@ -39,85 +87,71 @@ const Navbar: React.FC = () => {
             </span>
           </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden lg:flex items-center space-x-10 rtl:space-x-reverse">
-            <div className="flex space-x-8 rtl:space-x-reverse">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.path}
-                  to={link.path}
-                  className={`text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 relative py-2 group ${
-                    location.pathname === link.path ? 'text-red-600' : 'text-zinc-400 hover:text-white'
-                  }`}
-                >
-                  {link.name}
-                  <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-red-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100 ${location.pathname === link.path ? 'scale-x-100' : ''}`}></span>
-                </Link>
-              ))}
-            </div>
+          {/* Controls */}
+          <div className="flex items-center space-x-6 rtl:space-x-reverse">
+            <button 
+              onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+              className="hidden sm:flex items-center gap-2 text-zinc-400 hover:text-white transition-all text-[10px] font-black tracking-widest px-3 py-1.5 rounded-full border border-white/10 hover:border-red-600/50"
+            >
+              <Globe size={12} className="text-red-600" />
+              {language === 'en' ? 'ARABIC' : 'ENGLISH'}
+            </button>
             
-            <div className="flex items-center space-x-6 rtl:space-x-reverse border-l border-white/10 rtl:border-l-0 rtl:border-r pl-6 rtl:pl-0 rtl:pr-6">
-              <button 
-                onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-                className="flex items-center gap-2 text-zinc-400 hover:text-white transition-all text-[10px] font-black tracking-widest px-3 py-1.5 rounded-full border border-white/10 hover:border-red-600/50"
-              >
-                <Globe size={12} className="text-red-600" />
-                {language === 'en' ? 'ARABIC' : 'ENGLISH'}
-              </button>
-              <Link
-                to="/memberships"
-                className="bg-red-600 hover:bg-red-700 text-white px-7 py-3 rounded-lg font-oswald text-xs font-bold tracking-widest transition-all hover:translate-y-[-2px] hover:shadow-xl hover:shadow-red-600/30 uppercase"
-              >
-                {t.nav.join}
-              </Link>
-            </div>
-          </div>
-
-          {/* Mobile menu button */}
-          <div className="lg:hidden flex items-center gap-4">
-             <button 
-                onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-                className="p-2 text-zinc-400"
-              >
-                <Globe size={20} />
-              </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="p-2.5 bg-zinc-900 border border-white/10 rounded-lg text-white"
+              className="flex items-center gap-3 px-5 py-3 bg-zinc-900 border border-white/10 rounded-xl text-white font-oswald font-bold text-xs tracking-[0.2em] hover:bg-zinc-800 transition-all uppercase"
             >
-              {isOpen ? <X size={24} /> : <Menu size={24} />}
+              <span className="hidden sm:inline">{isOpen ? 'CLOSE' : t.nav.menu}</span>
+              {isOpen ? <X size={18} /> : <Menu size={18} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Nav Overlay */}
-      <div className={`fixed inset-0 bg-zinc-950 z-[90] transition-transform duration-500 lg:hidden ${isOpen ? 'translate-y-0' : '-translate-y-full'}`}>
-        <div className="flex flex-col h-full pt-32 px-8">
-          <div className="space-y-6">
-            {navLinks.map((link) => (
-              <Link
-                key={link.path}
-                to={link.path}
-                className="block text-4xl font-oswald font-bold text-white hover:text-red-600 transition-colors uppercase"
-              >
-                {link.name}
-              </Link>
+      {/* Full-Screen Mega Menu */}
+      <div className={`fixed inset-0 bg-zinc-950 z-[90] transition-all duration-700 ease-in-out ${isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none translate-y-4'}`}>
+        <div className="h-full overflow-y-auto pt-32 pb-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-12 lg:gap-8">
+            {menuGroups.map((group, idx) => (
+              <div key={idx} className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500" style={{ animationDelay: `${idx * 100}ms` }}>
+                <h4 className="text-red-600 font-black text-[10px] tracking-[0.3em] uppercase border-b border-red-600/20 pb-4">{group.title}</h4>
+                <ul className="space-y-4">
+                  {group.items.map((item, i) => (
+                    <li key={i}>
+                      <Link
+                        to={item.path}
+                        className="group flex items-center justify-between text-zinc-400 hover:text-white transition-colors py-1"
+                        onClick={() => item.path.startsWith('http') && window.open(item.path, '_blank')}
+                      >
+                        <span className="text-lg font-oswald font-bold tracking-tight uppercase group-hover:translate-x-1 transition-transform duration-300">
+                          {item.name}
+                        </span>
+                        <ChevronRight size={14} className={`opacity-0 group-hover:opacity-100 transition-all ${isRTL ? 'rotate-180' : ''}`} />
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-            <Link
-              to="/memberships"
-              className="block text-4xl font-oswald font-bold text-red-600 uppercase"
-            >
-              {t.nav.join}
-            </Link>
           </div>
-          <div className="mt-auto pb-12">
-             <div className="h-px bg-white/10 mb-8 w-full"></div>
-             <p className="text-zinc-500 text-xs font-bold tracking-widest uppercase mb-4">Follow the box</p>
-             <div className="flex gap-6 text-white">
-               <span>INSTA</span>
-               <span>FACEBOOK</span>
-               <span>YOUTUBE</span>
+
+          <div className="mt-20 pt-12 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-8">
+             <div className="flex gap-10">
+                <a href="#" className="text-zinc-500 hover:text-white text-[10px] font-black tracking-widest uppercase transition-colors">Instagram</a>
+                <a href="#" className="text-zinc-500 hover:text-white text-[10px] font-black tracking-widest uppercase transition-colors">Facebook</a>
+                <a href="https://www.youtube.com/channel/UCWkvbZLSVElXym9KHtiqTrg" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white text-[10px] font-black tracking-widest uppercase transition-colors">Youtube</a>
+             </div>
+             <div className="flex items-center gap-4">
+                <button 
+                  onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+                  className="sm:hidden flex items-center gap-2 text-zinc-400 hover:text-white transition-all text-[10px] font-black tracking-widest px-4 py-2 rounded-full border border-white/10"
+                >
+                  <Globe size={12} className="text-red-600" />
+                  {language === 'en' ? 'ARABIC' : 'ENGLISH'}
+                </button>
+                <Link to="/memberships" className="bg-red-600 text-white px-8 py-3 rounded-xl font-oswald font-bold text-xs tracking-widest uppercase hover:bg-red-700 transition-all">
+                  {t.nav.join}
+                </Link>
              </div>
           </div>
         </div>
