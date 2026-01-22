@@ -9,6 +9,11 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
-    sourcemap: false
+    sourcemap: false,
+    chunkSizeWarningLimit: 1000 // Increase limit to handle larger React 19 / Lucide bundles
+  },
+  server: {
+    port: 3000,
+    strictPort: true
   }
 });
