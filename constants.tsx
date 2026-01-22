@@ -1,4 +1,3 @@
-
 import { Trainer, ClassSession, MembershipPlan, BlogPost, Testimonial, LocationBranch } from './types';
 
 export const TRAINERS: Trainer[] = [
@@ -13,7 +12,7 @@ export const TRAINERS: Trainer[] = [
     id: '2',
     name: 'Sarah Chen',
     specialty: 'Yoga & Flexibility',
-    image: 'https://images.unsplash.com/photo-1552196564-97e849930562?w=800&q=80',
+    image: 'https://images.unsplash.com/photo-1599447421416-3414500d18a5?w=800&q=80',
     bio: 'Specializing in mobility and mindfulness to build a resilient body and mind.'
   },
   {
