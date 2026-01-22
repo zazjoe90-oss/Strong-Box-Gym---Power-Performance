@@ -1,54 +1,60 @@
-
 import React from 'react';
 import { MapPin, Phone, Mail, CheckCircle, Navigation } from 'lucide-react';
 import { LOCATIONS } from '../constants';
+import { useLanguage } from '../context/LanguageContext';
 
 const Locations: React.FC = () => {
+  const { t, isRTL } = useLanguage();
+
   return (
-    <div className="min-h-screen bg-zinc-950 py-20 px-4">
+    <div className="min-h-screen bg-zinc-950 py-24 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <h1 className="text-5xl font-oswald font-extrabold mb-4 uppercase">OUR <span className="text-red-600">LOCATIONS</span></h1>
-          <p className="text-zinc-400 max-w-2xl mx-auto">Find a Strong Box near you in Qatar and start your fitness journey today.</p>
+        <div className="text-center mb-20">
+          <h1 className="text-6xl md:text-8xl font-oswald font-black mb-6 uppercase tracking-tighter">
+            {t.locations.title} <span className="text-red-600">{t.locations.titleRed}</span>
+          </h1>
+          <p className="text-zinc-400 text-xl font-light max-w-2xl mx-auto">{t.locations.subtitle}</p>
         </div>
 
-        <div className="grid gap-16">
+        <div className="grid gap-24">
           {LOCATIONS.map((branch, index) => (
-            <div key={branch.id} className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-10 items-center`}>
+            <div key={branch.id} className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-16 items-center`}>
               {/* Info Side */}
               <div className="flex-1 w-full">
-                <div className="bg-zinc-900/50 p-8 rounded-2xl border border-zinc-800 h-full">
-                  <h2 className="text-3xl font-oswald font-bold mb-6 text-white uppercase tracking-tight">{branch.name}</h2>
+                <div className="glass border-white/5 p-12 rounded-[2.5rem] relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-64 h-64 bg-red-600/5 blur-[100px] pointer-events-none group-hover:bg-red-600/10 transition-colors"></div>
                   
-                  <div className="space-y-6 mb-8">
-                    <div className="flex items-start gap-4">
-                      <div className="bg-red-600/10 p-2 rounded text-red-600">
-                        <MapPin size={20} />
+                  <h2 className="text-4xl font-oswald font-black mb-10 text-white uppercase tracking-tight">{branch.name}</h2>
+                  
+                  <div className="space-y-8 mb-12">
+                    <div className="flex items-start gap-6">
+                      <div className="bg-red-600/10 p-3 rounded-xl text-red-600">
+                        <MapPin size={24} />
                       </div>
-                      <p className="text-zinc-300 text-lg leading-snug">{branch.address}</p>
+                      <p className="text-zinc-300 text-xl leading-snug font-light">{branch.address}</p>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                      <div className="bg-red-600/10 p-2 rounded text-red-600">
-                        <Phone size={20} />
+                    <div className="flex items-center gap-6">
+                      <div className="bg-red-600/10 p-3 rounded-xl text-red-600">
+                        <Phone size={24} />
                       </div>
-                      <p className="text-zinc-300">{branch.phone}</p>
+                      <p className="text-zinc-300 font-bold tracking-wider">{branch.phone}</p>
                     </div>
 
-                    <div className="flex items-center gap-4">
-                      <div className="bg-red-600/10 p-2 rounded text-red-600">
-                        <Mail size={20} />
+                    <div className="flex items-center gap-6">
+                      <div className="bg-red-600/10 p-3 rounded-xl text-red-600">
+                        <Mail size={24} />
                       </div>
-                      <p className="text-zinc-300">{branch.email}</p>
+                      <p className="text-zinc-300 font-bold tracking-wider">{branch.email}</p>
                     </div>
                   </div>
 
-                  <div className="mb-8">
-                    <h3 className="text-sm font-oswald font-bold text-red-600 uppercase tracking-widest mb-4">Branch Amenities</h3>
-                    <div className="grid grid-cols-2 gap-3">
+                  <div className="mb-12">
+                    <h3 className="text-[10px] font-black text-red-600 uppercase tracking-[0.3em] mb-6">{t.locations.amenities}</h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       {branch.amenities.map((item, i) => (
-                        <div key={i} className="flex items-center gap-2 text-zinc-400 text-sm">
-                          <CheckCircle size={14} className="text-red-600" />
+                        <div key={i} className="flex items-center gap-3 text-zinc-400 text-sm font-light">
+                          <CheckCircle size={16} className="text-red-600 shrink-0" />
                           {item}
                         </div>
                       ))}
@@ -59,16 +65,16 @@ const Locations: React.FC = () => {
                     href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(branch.address)}`} 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded font-oswald font-bold tracking-widest transition-all uppercase"
+                    className="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white px-10 py-5 rounded-2xl font-oswald font-black tracking-[0.2em] transition-all uppercase shadow-xl shadow-red-600/20"
                   >
-                    <Navigation size={18} />
-                    GET DIRECTIONS
+                    <Navigation size={20} />
+                    {t.locations.directions}
                   </a>
                 </div>
               </div>
 
               {/* Map Side */}
-              <div className="flex-1 w-full h-[400px] lg:h-[500px] rounded-2xl overflow-hidden border border-zinc-800 grayscale invert opacity-80 hover:grayscale-0 hover:invert-0 hover:opacity-100 transition-all duration-500">
+              <div className="flex-1 w-full h-[500px] rounded-[3rem] overflow-hidden border border-white/5 grayscale invert opacity-60 hover:grayscale-0 hover:invert-0 hover:opacity-100 transition-all duration-700 shadow-2xl">
                 <iframe 
                   src={branch.mapUrl} 
                   width="100%" 

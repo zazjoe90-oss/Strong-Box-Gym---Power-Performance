@@ -1,103 +1,125 @@
-
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Dumbbell } from 'lucide-react';
+import { Menu, X, Dumbbell, Globe, ArrowRight } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { language, setLanguage, t, isRTL } = useLanguage();
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on route change
+  useEffect(() => setIsOpen(false), [location]);
+
   const navLinks = [
-    { name: 'Home', path: '/' },
-    { name: 'Schedule', path: '/schedule' },
-    { name: 'Locations', path: '/locations' },
-    { name: 'Trainers', path: '/trainers' },
-    { name: 'Memberships', path: '/memberships' },
-    { name: 'AI Planner', path: '/planner' },
-    { name: 'Blog', path: '/blog' },
+    { name: t.nav.home, path: '/' },
+    { name: t.nav.schedule, path: '/schedule' },
+    { name: t.nav.locations, path: '/locations' },
+    { name: t.nav.trainers, path: '/trainers' },
+    { name: t.nav.planner, path: '/planner' },
   ];
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-zinc-950/95 backdrop-blur-md border-b border-zinc-800 py-3' : 'bg-transparent py-5'}`}>
+    <nav className={`fixed w-full z-[100] transition-all duration-500 ${scrolled ? 'bg-zinc-950/90 backdrop-blur-xl border-b border-white/5 py-3' : 'bg-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="bg-red-600 p-2 rounded-md group-hover:rotate-12 transition-transform duration-300">
+          <Link to="/" className="flex items-center space-x-3 rtl:space-x-reverse group relative">
+            <div className="bg-red-600 p-2.5 rounded-lg shadow-lg shadow-red-600/20 group-hover:scale-110 transition-all duration-300">
               <Dumbbell className="h-6 w-6 text-white" />
             </div>
-            <span className="text-2xl font-oswald font-bold tracking-tighter">
+            <span className="text-2xl font-oswald font-bold tracking-tighter leading-none">
               STRONG<span className="text-red-600">BOX</span>
             </span>
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:block">
-            <div className="flex items-baseline space-x-8">
+          <div className="hidden lg:flex items-center space-x-10 rtl:space-x-reverse">
+            <div className="flex space-x-8 rtl:space-x-reverse">
               {navLinks.map((link) => (
                 <Link
-                  key={link.name}
+                  key={link.path}
                   to={link.path}
-                  className={`text-sm font-semibold tracking-wide uppercase transition-colors duration-200 ${
-                    location.pathname === link.path ? 'text-red-600' : 'text-zinc-300 hover:text-white'
+                  className={`text-xs font-bold tracking-[0.2em] uppercase transition-all duration-300 relative py-2 group ${
+                    location.pathname === link.path ? 'text-red-600' : 'text-zinc-400 hover:text-white'
                   }`}
                 >
                   {link.name}
+                  <span className={`absolute bottom-0 left-0 w-full h-0.5 bg-red-600 transition-all duration-300 transform scale-x-0 group-hover:scale-x-100 ${location.pathname === link.path ? 'scale-x-100' : ''}`}></span>
                 </Link>
               ))}
+            </div>
+            
+            <div className="flex items-center space-x-6 rtl:space-x-reverse border-l border-white/10 rtl:border-l-0 rtl:border-r pl-6 rtl:pl-0 rtl:pr-6">
+              <button 
+                onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+                className="flex items-center gap-2 text-zinc-400 hover:text-white transition-all text-[10px] font-black tracking-widest px-3 py-1.5 rounded-full border border-white/10 hover:border-red-600/50"
+              >
+                <Globe size={12} className="text-red-600" />
+                {language === 'en' ? 'ARABIC' : 'ENGLISH'}
+              </button>
               <Link
                 to="/memberships"
-                className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded font-oswald text-sm font-bold tracking-widest transition-all duration-200 uppercase"
+                className="bg-red-600 hover:bg-red-700 text-white px-7 py-3 rounded-lg font-oswald text-xs font-bold tracking-widest transition-all hover:translate-y-[-2px] hover:shadow-xl hover:shadow-red-600/30 uppercase"
               >
-                Join Now
+                {t.nav.join}
               </Link>
             </div>
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden flex items-center gap-4">
+             <button 
+                onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
+                className="p-2 text-zinc-400"
+              >
+                <Globe size={20} />
+              </button>
             <button
-              onClick={toggleMenu}
-              className="inline-flex items-center justify-center p-2 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-800 focus:outline-none"
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2.5 bg-zinc-900 border border-white/10 rounded-lg text-white"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Nav */}
-      <div className={`md:hidden absolute w-full bg-zinc-950 border-b border-zinc-800 transition-all duration-300 ease-in-out ${isOpen ? 'max-h-screen opacity-100 py-4' : 'max-h-0 opacity-0 overflow-hidden'}`}>
-        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-          {navLinks.map((link) => (
+      {/* Mobile Nav Overlay */}
+      <div className={`fixed inset-0 bg-zinc-950 z-[90] transition-transform duration-500 lg:hidden ${isOpen ? 'translate-y-0' : '-translate-y-full'}`}>
+        <div className="flex flex-col h-full pt-32 px-8">
+          <div className="space-y-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.path}
+                to={link.path}
+                className="block text-4xl font-oswald font-bold text-white hover:text-red-600 transition-colors uppercase"
+              >
+                {link.name}
+              </Link>
+            ))}
             <Link
-              key={link.name}
-              to={link.path}
-              onClick={() => setIsOpen(false)}
-              className={`block px-3 py-2 rounded-md text-base font-medium uppercase ${
-                location.pathname === link.path ? 'bg-zinc-900 text-red-600' : 'text-zinc-300 hover:bg-zinc-800 hover:text-white'
-              }`}
+              to="/memberships"
+              className="block text-4xl font-oswald font-bold text-red-600 uppercase"
             >
-              {link.name}
+              {t.nav.join}
             </Link>
-          ))}
-          <Link
-            to="/memberships"
-            onClick={() => setIsOpen(false)}
-            className="block w-full text-center bg-red-600 hover:bg-red-700 text-white px-3 py-3 mt-4 rounded font-oswald font-bold"
-          >
-            JOIN NOW
-          </Link>
+          </div>
+          <div className="mt-auto pb-12">
+             <div className="h-px bg-white/10 mb-8 w-full"></div>
+             <p className="text-zinc-500 text-xs font-bold tracking-widest uppercase mb-4">Follow the box</p>
+             <div className="flex gap-6 text-white">
+               <span>INSTA</span>
+               <span>FACEBOOK</span>
+               <span>YOUTUBE</span>
+             </div>
+          </div>
         </div>
       </div>
     </nav>

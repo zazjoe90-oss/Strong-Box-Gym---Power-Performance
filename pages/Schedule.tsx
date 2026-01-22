@@ -1,11 +1,22 @@
-
 import React, { useState } from 'react';
-import { Calendar, Clock, User, Filter } from 'lucide-react';
+import { Calendar, Clock, User } from 'lucide-react';
 import { SCHEDULE } from '../constants';
+import { useLanguage } from '../context/LanguageContext';
 
 const Schedule: React.FC = () => {
+  const { t, isRTL } = useLanguage();
   const [selectedDay, setSelectedDay] = useState('Monday');
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  
+  // Maps for internal ID logic to translated strings
+  const dayMap: Record<string, string> = {
+    'Monday': t.schedule.days[0],
+    'Tuesday': t.schedule.days[1],
+    'Wednesday': t.schedule.days[2],
+    'Thursday': t.schedule.days[3],
+    'Friday': t.schedule.days[4],
+    'Saturday': t.schedule.days[5],
+    'Sunday': t.schedule.days[6],
+  };
 
   const filteredSchedule = SCHEDULE.filter(s => s.day === selectedDay);
 
@@ -19,57 +30,63 @@ const Schedule: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 py-20 px-4">
+    <div className="min-h-screen bg-zinc-950 py-24 px-4">
       <div className="max-w-7xl mx-auto">
-        <div className="mb-12 text-center">
-          <h1 className="text-5xl font-oswald font-extrabold mb-4">CLASS <span className="text-red-600">SCHEDULE</span></h1>
-          <p className="text-zinc-400">Plan your week of progress. Find the right class for your level.</p>
+        <div className="mb-16 text-center">
+          <h1 className="text-5xl md:text-7xl font-oswald font-black mb-4">
+            {t.schedule.title} <span className="text-red-600">{t.schedule.titleRed}</span>
+          </h1>
+          <p className="text-zinc-400 text-lg font-light">{t.schedule.subtitle}</p>
         </div>
 
         {/* Day Selector */}
-        <div className="flex flex-wrap justify-center gap-2 mb-12">
-          {days.map((day) => (
+        <div className="flex flex-wrap justify-center gap-3 mb-16">
+          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, idx) => (
             <button
               key={day}
               onClick={() => setSelectedDay(day)}
-              className={`px-6 py-2 rounded font-oswald font-bold text-sm tracking-widest transition-all duration-200 ${
-                selectedDay === day ? 'bg-red-600 text-white' : 'bg-zinc-900 text-zinc-400 hover:bg-zinc-800'
+              className={`px-8 py-3 rounded-xl font-oswald font-bold text-sm tracking-widest transition-all duration-300 ${
+                selectedDay === day 
+                ? 'bg-red-600 text-white shadow-xl shadow-red-600/20' 
+                : 'bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-white border border-white/5'
               }`}
             >
-              {day.toUpperCase()}
+              {dayMap[day].toUpperCase()}
             </button>
           ))}
         </div>
 
         {/* Schedule List */}
-        <div className="grid gap-4">
+        <div className="grid gap-6">
           {filteredSchedule.length > 0 ? (
             filteredSchedule.map((session) => (
-              <div key={session.id} className="bg-zinc-900 border border-zinc-800 p-6 rounded-lg flex flex-col md:flex-row items-center justify-between gap-6 hover:border-red-600/50 transition-all group">
-                <div className="flex flex-col md:flex-row md:items-center gap-6 w-full md:w-auto">
-                  <div className="bg-zinc-800 p-4 rounded-lg text-center min-w-[120px] group-hover:bg-red-600 transition-colors">
-                    <Clock className="w-5 h-5 mx-auto mb-1 text-red-600 group-hover:text-white" />
-                    <span className="font-oswald font-bold text-lg group-hover:text-white">{session.time}</span>
+              <div key={session.id} className="glass border-white/5 p-8 rounded-[2rem] flex flex-col lg:flex-row items-center justify-between gap-8 hover:border-red-600/40 transition-all group">
+                <div className="flex flex-col md:flex-row md:items-center gap-8 w-full md:w-auto">
+                  <div className="bg-zinc-950 p-6 rounded-2xl text-center min-w-[140px] border border-white/5 group-hover:bg-red-600 group-hover:border-red-600 transition-all duration-500">
+                    <Clock className="w-6 h-6 mx-auto mb-2 text-red-600 group-hover:text-white" />
+                    <span className="font-oswald font-black text-xl group-hover:text-white tracking-tighter">{session.time}</span>
                   </div>
                   <div>
-                    <h3 className="text-2xl font-oswald font-bold mb-1">{session.name}</h3>
-                    <div className="flex items-center text-zinc-400 text-sm gap-4">
-                      <span className="flex items-center"><User size={14} className="mr-1 text-red-600" /> {session.trainer}</span>
-                      <span className={`px-3 py-1 rounded-full text-xs font-bold ${getLevelColor(session.level)}`}>
-                        {session.level}
+                    <h3 className="text-3xl font-oswald font-bold mb-3 uppercase tracking-tight">{session.name}</h3>
+                    <div className="flex flex-wrap items-center text-zinc-400 text-sm gap-6">
+                      <span className="flex items-center font-bold tracking-wide uppercase">
+                        <User size={16} className="mr-2 rtl:ml-2 rtl:mr-0 text-red-600" /> {session.trainer}
+                      </span>
+                      <span className={`px-4 py-1.5 rounded-full text-[10px] font-black tracking-[0.2em] uppercase ${getLevelColor(session.level)}`}>
+                        {t.schedule.levels[session.level as keyof typeof t.schedule.levels]}
                       </span>
                     </div>
                   </div>
                 </div>
-                <button className="w-full md:w-auto px-8 py-3 bg-white text-black font-oswald font-bold rounded hover:bg-red-600 hover:text-white transition-all uppercase tracking-widest">
-                  Book Slot
+                <button className="w-full lg:w-auto px-12 py-5 bg-white text-zinc-950 font-oswald font-black rounded-2xl hover:bg-red-600 hover:text-white transition-all uppercase tracking-[0.1em] shadow-xl hover:shadow-red-600/20">
+                  {t.schedule.book}
                 </button>
               </div>
             ))
           ) : (
-            <div className="text-center py-20 bg-zinc-900 rounded-lg border border-dashed border-zinc-800">
-              <Calendar size={48} className="mx-auto mb-4 text-zinc-700" />
-              <p className="text-zinc-500 font-oswald text-xl">NO CLASSES SCHEDULED FOR THIS DAY</p>
+            <div className="text-center py-32 glass rounded-[3rem] border-dashed border-2 border-white/5">
+              <Calendar size={64} className="mx-auto mb-6 text-zinc-800" />
+              <p className="text-zinc-500 font-oswald font-black text-2xl uppercase tracking-widest">{t.schedule.noClasses}</p>
             </div>
           )}
         </div>
