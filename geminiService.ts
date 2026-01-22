@@ -1,8 +1,4 @@
-
 import { GoogleGenAI, Type } from "@google/genai";
-
-// Always use const ai = new GoogleGenAI({apiKey: process.env.API_KEY}); as per guidelines
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
 export interface WorkoutRecommendation {
   title: string;
@@ -12,6 +8,10 @@ export interface WorkoutRecommendation {
 }
 
 export const getWorkoutPlan = async (goal: string, level: string, time: string): Promise<WorkoutRecommendation> => {
+  // Initialize inside the function to ensure it uses the latest process.env value 
+  // and doesn't crash the whole app if the key is missing at boot.
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
   try {
     const response = await ai.models.generateContent({
       model: 'gemini-3-flash-preview',
@@ -46,7 +46,6 @@ export const getWorkoutPlan = async (goal: string, level: string, time: string):
       }
     });
 
-    // The text property returns the string output directly as a getter
     const jsonStr = response.text || '{}';
     return JSON.parse(jsonStr.trim());
   } catch (error) {
