@@ -71,8 +71,8 @@ const Navbar: React.FC = () => {
       title: t.nav.groups.community,
       items: [
         { name: t.nav.items.events, path: '/schedule' },
-        { name: t.nav.items.insta, path: 'https://instagram.com' },
-        { name: t.nav.items.fb, path: 'https://facebook.com' },
+        { name: t.nav.items.insta, path: 'https://www.instagram.com/thestrongbox/' },
+        { name: t.nav.items.fb, path: 'https://www.facebook.com/strongboxqatar/?_rdc=2&_rdr#' },
       ]
     },
     {
@@ -215,9 +215,9 @@ const Navbar: React.FC = () => {
                   className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8"
                 >
                   <div className="flex gap-6">
-                    <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Instagram size={24} /></a>
-                    <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Facebook size={24} /></a>
-                    <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Youtube size={24} /></a>
+                    <a href="https://www.instagram.com/thestrongbox/" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white transition-colors"><Instagram size={24} /></a>
+                    <a href="https://www.facebook.com/strongboxqatar/?_rdc=2&_rdr#" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white transition-colors"><Facebook size={24} /></a>
+                    <a href="https://www.youtube.com/channel/UCWkvbZLSVElXym9KHtiqTrg" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white transition-colors"><Youtube size={24} /></a>
                   </div>
                   <p className="text-zinc-600 text-[10px] font-black tracking-widest uppercase">
                     © 2024 STRONG BOX QATAR — ELITE PERFORMANCE HUB

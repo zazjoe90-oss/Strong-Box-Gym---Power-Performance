@@ -27,8 +27,8 @@ const Footer: React.FC = () => {
             <h4 className="text-red-600 font-black text-[10px] tracking-[0.3em] uppercase">{t.nav.groups.community}</h4>
             <ul className="space-y-4">
               <li><Link to="/schedule" className="text-zinc-500 hover:text-red-600 text-xs font-black uppercase tracking-widest transition-colors">{t.nav.items.events}</Link></li>
-              <li><a href="https://instagram.com" target="_blank" className="text-zinc-500 hover:text-red-600 text-xs font-black uppercase tracking-widest transition-colors">{t.nav.items.insta}</a></li>
-              <li><a href="https://facebook.com" target="_blank" className="text-zinc-500 hover:text-red-600 text-xs font-black uppercase tracking-widest transition-colors">{t.nav.items.fb}</a></li>
+              <li><a href="https://www.instagram.com/thestrongbox/" target="_blank" className="text-zinc-500 hover:text-red-600 text-xs font-black uppercase tracking-widest transition-colors">{t.nav.items.insta}</a></li>
+              <li><a href="https://www.facebook.com/strongboxqatar/?_rdc=2&_rdr#" target="_blank" className="text-zinc-500 hover:text-red-600 text-xs font-black uppercase tracking-widest transition-colors">{t.nav.items.fb}</a></li>
             </ul>
           </div>
 
@@ -61,8 +61,8 @@ const Footer: React.FC = () => {
               <li><Link to="/locations" className="text-zinc-500 hover:text-red-600 text-xs font-black uppercase tracking-widest transition-colors">{t.nav.items.taster}</Link></li>
             </ul>
             <div className="flex gap-4 pt-4">
-              <a href="#" className="w-10 h-10 glass flex items-center justify-center text-white rounded-lg hover:bg-red-600 transition-all"><Instagram size={18} /></a>
-              <a href="#" className="w-10 h-10 glass flex items-center justify-center text-white rounded-lg hover:bg-red-600 transition-all"><Facebook size={18} /></a>
+              <a href="https://www.instagram.com/thestrongbox/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 glass flex items-center justify-center text-white rounded-lg hover:bg-red-600 transition-all"><Instagram size={18} /></a>
+              <a href="https://www.facebook.com/strongboxqatar/?_rdc=2&_rdr#" target="_blank" rel="noopener noreferrer" className="w-10 h-10 glass flex items-center justify-center text-white rounded-lg hover:bg-red-600 transition-all"><Facebook size={18} /></a>
               <a href="https://www.youtube.com/channel/UCWkvbZLSVElXym9KHtiqTrg" target="_blank" rel="noopener noreferrer" className="w-10 h-10 glass flex items-center justify-center text-white rounded-lg hover:bg-red-600 transition-all"><Youtube size={18} /></a>
             </div>
           </div>
