@@ -1,12 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-import { ArrowRight, Play, Check, Shield, Zap, TrendingUp, Trophy, Calculator, Scale, Star } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Play, Check, Shield, Zap, Trophy, Scale, Star, X } from 'lucide-react';
 import { MEMBERSHIPS, TRAINERS } from '../constants';
 import { useLanguage } from '../context/LanguageContext';
 
 const Home: React.FC = () => {
   const { t, isRTL } = useLanguage();
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
   
   // Interactive Calculator State
   const [weight, setWeight] = useState(75);
@@ -25,6 +26,15 @@ const Home: React.FC = () => {
     if (val < 30) return { label: 'Overweight', color: 'text-yellow-400' };
     return { label: 'Obese', color: 'text-red-500' };
   };
+
+  // Handle ESC for video
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsVideoOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const staggerContainer = {
     hidden: { opacity: 0 },
@@ -98,7 +108,10 @@ const Home: React.FC = () => {
                 {t.hero.cta}
                 <ArrowRight className={`ml-3 rtl:mr-3 rtl:ml-0 rtl:rotate-180 group-hover:translate-x-2 rtl:group-hover:-translate-x-2 transition-transform duration-300`} size={22} />
               </Link>
-              <button className="flex items-center justify-center space-x-4 rtl:space-x-reverse text-white px-10 py-5 rounded-xl glass hover:bg-white/10 transition-all font-oswald font-bold text-lg">
+              <button 
+                onClick={() => setIsVideoOpen(true)}
+                className="flex items-center justify-center space-x-4 rtl:space-x-reverse text-white px-10 py-5 rounded-xl glass hover:bg-white/10 transition-all font-oswald font-bold text-lg"
+              >
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
                    <Play className="fill-current text-white" size={18} />
                 </div>
@@ -108,6 +121,40 @@ const Home: React.FC = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Video Modal */}
+      <AnimatePresence>
+        {isVideoOpen && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-[200] flex items-center justify-center bg-black/95 backdrop-blur-xl p-4 sm:p-10"
+            onClick={() => setIsVideoOpen(false)}
+          >
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="relative w-full max-w-6xl aspect-video bg-zinc-900 rounded-[2rem] overflow-hidden shadow-2xl border border-white/10"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setIsVideoOpen(false)}
+                className="absolute top-6 right-6 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-red-600 transition-colors"
+              >
+                <X size={24} />
+              </button>
+              <video 
+                src="https://www.strongboxqatar.com/wp-content/uploads/2024/05/SBX-VIDEO.mp4" 
+                className="w-full h-full object-cover"
+                controls
+                autoPlay
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Philosophy Section */}
       <section className="py-32 bg-zinc-950 relative overflow-hidden">
