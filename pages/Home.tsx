@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Play, Check, Shield, Zap, TrendingUp, Trophy, Calculator, Scale } from 'lucide-react';
+import { ArrowRight, Play, Check, Shield, Zap, TrendingUp, Trophy, Calculator, Scale, Star } from 'lucide-react';
 import { MEMBERSHIPS, TRAINERS } from '../constants';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -284,7 +284,65 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Membership CTA */}
+      {/* Pricing Section */}
+      <section className="py-32 bg-zinc-950 border-t border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-20">
+            <h2 className="text-5xl md:text-7xl font-oswald font-black text-white mb-6 uppercase tracking-tight">CHOOSE YOUR <span className="text-red-600">PLAN</span></h2>
+            <p className="text-zinc-400 text-xl font-light max-w-2xl mx-auto">Elite membership for elite athletes. No joining fees. Just pure focus.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+            {MEMBERSHIPS.map((plan, idx) => (
+              <motion.div 
+                key={plan.id}
+                initial={{ opacity: 0, y: 40 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.1 }}
+                className={`group flex flex-col p-8 rounded-[2.5rem] glass transition-all duration-500 ${
+                  plan.recommended 
+                    ? 'border-red-600 shadow-2xl shadow-red-600/10 bg-red-600/5' 
+                    : 'border-white/5 hover:border-red-600/40'
+                }`}
+              >
+                {plan.recommended && (
+                  <div className="flex items-center gap-2 text-red-600 font-black text-[10px] tracking-[0.3em] uppercase mb-6">
+                    <Star size={14} className="fill-current" /> {t.pricing.recommended}
+                  </div>
+                )}
+                
+                <h3 className="text-3xl font-oswald font-black text-white mb-2 uppercase">{plan.name}</h3>
+                <div className="flex items-baseline gap-1 mb-8">
+                  <span className="text-6xl font-oswald font-black text-white">{plan.price}</span>
+                  <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest">/ {plan.period}</span>
+                </div>
+
+                <div className="space-y-4 mb-10 flex-grow">
+                  {plan.features.map((feature, i) => (
+                    <div key={i} className="flex items-start gap-3">
+                      <Check className="text-red-600 mt-1 shrink-0" size={16} />
+                      <span className="text-zinc-400 text-sm font-light leading-tight">{feature}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <Link 
+                  to="/memberships" 
+                  className={`w-full py-5 rounded-2xl font-oswald font-black uppercase text-sm tracking-widest text-center transition-all ${
+                    plan.recommended 
+                    ? 'bg-red-600 text-white hover:bg-red-700' 
+                    : 'bg-white/5 text-white hover:bg-white/10 border border-white/10'
+                  }`}
+                >
+                  {t.pricing.select}
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Membership CTA Banner */}
       <section className="py-32 bg-red-600 relative overflow-hidden">
         <motion.div 
           animate={{ rotate: 360 }}
