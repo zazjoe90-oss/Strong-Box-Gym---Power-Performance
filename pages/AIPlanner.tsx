@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// @ts-ignore
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, Brain, Loader2, Dumbbell, Clock, Target, ChevronRight, Share2, ClipboardList } from 'lucide-react';
 import { getWorkoutPlan, WorkoutRecommendation } from '../geminiService';

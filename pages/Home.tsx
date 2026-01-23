@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+// @ts-ignore
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Play, Check, Shield, Zap, Trophy, Scale, Star, X } from 'lucide-react';
 import { MEMBERSHIPS, TRAINERS } from '../constants';
@@ -139,7 +140,7 @@ const Home: React.FC = () => {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               className="relative w-full max-w-6xl aspect-video bg-zinc-900 rounded-[2rem] overflow-hidden shadow-2xl border border-white/10"
-              onClick={(e) => e.stopPropagation()}
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
             >
               <button 
                 onClick={() => setIsVideoOpen(false)}

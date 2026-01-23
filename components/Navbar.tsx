@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Dumbbell, Globe, ChevronRight, Home } from 'lucide-react';
+import { Menu, X, Dumbbell, Globe, ChevronRight, Home, Instagram, Facebook, Youtube } from 'lucide-react';
+// @ts-ignore
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -157,7 +158,7 @@ const Navbar: React.FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5, ease: "circOut" }}
-                onClick={(e) => e.stopPropagation()}
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
                 className="cursor-default"
               >
                 {/* Back to Home Quick Link for Mobile */}
@@ -211,18 +212,16 @@ const Navbar: React.FC = () => {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="max-w-7xl mx-auto mt-20 pt-12 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-8"
+                  className="mt-20 pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-8"
                 >
-                  <div className="flex gap-10">
-                    <a href="#" className="text-zinc-500 hover:text-white text-[10px] font-black tracking-widest uppercase transition-colors">Instagram</a>
-                    <a href="#" className="text-zinc-500 hover:text-white text-[10px] font-black tracking-widest uppercase transition-colors">Facebook</a>
-                    <a href="https://www.youtube.com/channel/UCWkvbZLSVElXym9KHtiqTrg" target="_blank" rel="noopener noreferrer" className="text-zinc-500 hover:text-white text-[10px] font-black tracking-widest uppercase transition-colors">Youtube</a>
+                  <div className="flex gap-6">
+                    <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Instagram size={24} /></a>
+                    <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Facebook size={24} /></a>
+                    <a href="#" className="text-zinc-500 hover:text-white transition-colors"><Youtube size={24} /></a>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <Link to="/memberships" onClick={() => setIsOpen(false)} className="bg-red-600 text-white px-8 py-3 rounded-xl font-oswald font-bold text-xs tracking-widest uppercase hover:bg-red-700 transition-all">
-                      {t.nav.join}
-                    </Link>
-                  </div>
+                  <p className="text-zinc-600 text-[10px] font-black tracking-widest uppercase">
+                    © 2024 STRONG BOX QATAR — ELITE PERFORMANCE HUB
+                  </p>
                 </motion.div>
               </motion.div>
             </motion.div>
