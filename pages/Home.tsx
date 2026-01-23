@@ -54,14 +54,15 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col overflow-x-hidden">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center pt-20">
-        <div className="absolute inset-0 z-0 overflow-hidden">
+      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+        <div className="absolute inset-0 z-0">
           <motion.img 
             initial={{ scale: 1.2, opacity: 0 }}
             animate={{ scale: 1, opacity: 0.5 }}
             transition={{ duration: 1.5, ease: "easeOut" }}
             src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=1600&q=80" 
-            alt="Gym Hero" 
+            alt="Elite Gym Performance" 
+            loading="eager"
             className="w-full h-full object-cover"
           />
           <div className={`absolute inset-0 bg-gradient-to-${isRTL ? 'l' : 'r'} from-zinc-950 via-zinc-950/80 to-transparent`}></div>
@@ -76,11 +77,11 @@ const Home: React.FC = () => {
             className="max-w-4xl"
           >
             <div className="inline-flex items-center gap-3 px-4 py-1.5 glass rounded-full mb-8">
-              <span className="w-2 h-2 rounded-full bg-red-600 animate-ping"></span>
+              <span className="w-2 h-2 rounded-full bg-red-600 animate-ping" aria-hidden="true"></span>
               <span className="text-white font-bold text-[10px] tracking-[0.3em] uppercase">{t.hero.tag}</span>
             </div>
             
-            <h1 className="text-6xl md:text-8xl lg:text-[10rem] font-oswald font-black mb-8 leading-[0.85] tracking-tighter text-white">
+            <h1 className="text-[clamp(3.5rem,10vw,10rem)] font-oswald font-black mb-8 leading-[0.85] tracking-tighter text-white">
               <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }} className="block">{t.hero.title1}</motion.span>
               <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }} className="block text-red-600 text-glow">{t.hero.titleRed}</motion.span>
               <motion.span initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6 }} className="block text-zinc-600">{t.hero.title2}</motion.span>
@@ -110,6 +111,7 @@ const Home: React.FC = () => {
               </Link>
               <button 
                 onClick={() => setIsVideoOpen(true)}
+                aria-label="Play tour video"
                 className="flex items-center justify-center space-x-4 rtl:space-x-reverse text-white px-10 py-5 rounded-xl glass hover:bg-white/10 transition-all font-oswald font-bold text-lg"
               >
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center">
@@ -141,7 +143,8 @@ const Home: React.FC = () => {
             >
               <button 
                 onClick={() => setIsVideoOpen(false)}
-                className="absolute top-6 right-6 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-red-600 transition-colors"
+                aria-label="Close video"
+                className="absolute top-4 right-4 sm:top-6 sm:right-6 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-red-600 transition-colors"
               >
                 <X size={24} />
               </button>
@@ -157,9 +160,9 @@ const Home: React.FC = () => {
       </AnimatePresence>
 
       {/* Philosophy Section */}
-      <section className="py-32 bg-zinc-950 relative overflow-hidden">
+      <section id="philosophy" className="py-20 md:py-32 bg-zinc-950 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
               <motion.div
                 initial="hidden"
                 whileInView="show"
@@ -196,19 +199,19 @@ const Home: React.FC = () => {
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 1 }}
                 viewport={{ once: true }}
-                className="relative"
+                className="relative mt-12 lg:mt-0"
               >
-                <div className="aspect-[4/5] rounded-3xl overflow-hidden border-8 border-zinc-900 shadow-2xl">
-                   <img src="https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?w=1200&q=80" className="w-full h-full object-cover" alt="Focus" />
+                <div className="aspect-[4/5] rounded-3xl overflow-hidden border-4 md:border-8 border-zinc-900 shadow-2xl">
+                   <img src="https://images.unsplash.com/photo-1534367507873-d2d7e24c797f?w=1200&q=80" loading="lazy" className="w-full h-full object-cover" alt="Dedicated Gym Member Training" />
                 </div>
                 <motion.div 
                   initial={{ x: -20, opacity: 0 }}
                   whileInView={{ x: 0, opacity: 1 }}
                   transition={{ delay: 0.5 }}
-                  className="absolute -bottom-10 -left-10 glass p-8 rounded-2xl hidden md:block"
+                  className="absolute -bottom-6 -left-6 md:-bottom-10 md:-left-10 glass p-6 md:p-8 rounded-2xl hidden sm:block"
                 >
-                   <div className="text-red-600 font-black text-5xl font-oswald">100%</div>
-                   <div className="text-white text-xs font-bold tracking-widest uppercase">Performance Guarantee</div>
+                   <div className="text-red-600 font-black text-4xl md:text-5xl font-oswald">100%</div>
+                   <div className="text-white text-[10px] font-bold tracking-widest uppercase">Performance Guarantee</div>
                 </motion.div>
               </motion.div>
            </div>
@@ -216,20 +219,21 @@ const Home: React.FC = () => {
       </section>
 
       {/* Interactive BMI Calculator */}
-      <section className="py-32 bg-zinc-900/50 relative border-y border-white/5">
+      <section className="py-20 md:py-32 bg-zinc-900/50 relative border-y border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-oswald font-black text-white mb-6 uppercase">ANALYZE YOUR <span className="text-red-600">FRAME</span></h2>
+            <h2 className="text-5xl font-oswald font-black text-white mb-6 uppercase tracking-tight">ANALYZE YOUR <span className="text-red-600">FRAME</span></h2>
             <p className="text-zinc-500 font-light max-w-xl mx-auto">Get instant feedback on your current physical baseline to optimize your training path.</p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <motion.div 
               initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="glass p-10 rounded-[2.5rem] border-white/5"
+              viewport={{ once: true }}
+              className="glass p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] border-white/5"
             >
-              <div className="space-y-12">
+              <div className="space-y-10 md:space-y-12">
                 <div className="space-y-6">
                   <div className="flex justify-between items-center">
                     <label className="text-zinc-400 font-black text-[10px] uppercase tracking-widest">Weight (kg)</label>
@@ -243,6 +247,7 @@ const Home: React.FC = () => {
                       calculateBmi(val, height);
                     }}
                     className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-red-600"
+                    aria-label="Weight in kilograms"
                   />
                 </div>
 
@@ -259,6 +264,7 @@ const Home: React.FC = () => {
                       calculateBmi(weight, val);
                     }}
                     className="w-full h-2 bg-zinc-800 rounded-lg appearance-none cursor-pointer accent-red-600"
+                    aria-label="Height in centimeters"
                   />
                 </div>
               </div>
@@ -267,7 +273,8 @@ const Home: React.FC = () => {
             <motion.div 
               initial={{ opacity: 0, x: 30 }}
               whileInView={{ opacity: 1, x: 0 }}
-              className="relative flex flex-col items-center justify-center p-12 bg-zinc-950 rounded-[3rem] border border-white/5"
+              viewport={{ once: true }}
+              className="relative flex flex-col items-center justify-center p-8 md:p-12 bg-zinc-950 rounded-[2rem] md:rounded-[3rem] border border-white/5"
             >
               <div className="absolute inset-0 bg-red-600/5 blur-[80px] pointer-events-none"></div>
               <Scale size={48} className="text-red-600 mb-6 opacity-50" />
@@ -277,16 +284,16 @@ const Home: React.FC = () => {
                   key={bmi}
                   initial={{ scale: 0.8, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
-                  className="text-8xl md:text-9xl font-oswald font-black text-white leading-none mb-4"
+                  className="text-7xl md:text-9xl font-oswald font-black text-white leading-none mb-4"
                 >
                   {bmi}
                 </motion.div>
-                <div className={`text-2xl font-oswald font-bold uppercase tracking-widest ${getBmiStatus(bmi).color}`}>
+                <div className={`text-xl md:text-2xl font-oswald font-bold uppercase tracking-widest ${getBmiStatus(bmi).color}`}>
                   {getBmiStatus(bmi).label}
                 </div>
               </div>
               
-              <Link to="/planner" className="mt-12 group flex items-center gap-3 text-white font-bold text-xs uppercase tracking-widest bg-white/5 hover:bg-red-600 px-8 py-4 rounded-xl transition-all">
+              <Link to="/planner" className="mt-10 md:mt-12 group flex items-center gap-3 text-white font-bold text-[10px] md:text-xs uppercase tracking-widest bg-white/5 hover:bg-red-600 px-6 md:px-8 py-4 rounded-xl transition-all">
                 OPTIMIZE WITH AI <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
               </Link>
             </motion.div>
@@ -295,15 +302,15 @@ const Home: React.FC = () => {
       </section>
 
       {/* Trainers Highlight */}
-      <section className="py-32 bg-zinc-950">
+      <section className="py-20 md:py-32 bg-zinc-950">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6"
           >
-            <h2 className="text-5xl font-oswald font-black text-white leading-none">THE <span className="text-red-600">COMMANDERS</span></h2>
-            <Link to="/trainers" className="text-red-600 font-bold uppercase tracking-widest flex items-center gap-2 hover:gap-4 transition-all">
+            <h2 className="text-5xl font-oswald font-black text-white leading-none tracking-tight">THE <span className="text-red-600">COMMANDERS</span></h2>
+            <Link to="/trainers" className="text-red-600 font-bold uppercase tracking-widest text-xs flex items-center gap-2 hover:gap-4 transition-all">
               VIEW ALL COACHES <ArrowRight size={18} />
             </Link>
           </motion.div>
@@ -318,12 +325,12 @@ const Home: React.FC = () => {
                 viewport={{ once: true }}
                 className="group relative aspect-[3/4] rounded-3xl overflow-hidden cursor-pointer"
               >
-                 <img src={trainer.image} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" />
+                 <img src={trainer.image} loading="lazy" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100" alt={`Coach ${trainer.name}`} />
                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/20 to-transparent"></div>
                  <div className="absolute bottom-0 left-0 p-8 w-full transform translate-y-4 group-hover:translate-y-0 transition-transform">
                     <span className="text-red-600 text-xs font-black tracking-widest uppercase">{trainer.specialty}</span>
                     <h3 className="text-3xl font-oswald font-bold text-white mt-1 uppercase">{trainer.name}</h3>
-                    <p className="text-zinc-400 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 mt-2 font-light">{trainer.bio}</p>
+                    <p className="text-zinc-400 text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-500 mt-2 font-light line-clamp-2">{trainer.bio}</p>
                  </div>
               </motion.div>
             ))}
@@ -332,21 +339,22 @@ const Home: React.FC = () => {
       </section>
 
       {/* Pricing Section */}
-      <section className="py-32 bg-zinc-950 border-t border-white/5">
+      <section className="py-20 md:py-32 bg-zinc-950 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-7xl font-oswald font-black text-white mb-6 uppercase tracking-tight">CHOOSE YOUR <span className="text-red-600">PLAN</span></h2>
             <p className="text-zinc-400 text-xl font-light max-w-2xl mx-auto">Elite membership for elite athletes. No joining fees. Just pure focus.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
             {MEMBERSHIPS.map((plan, idx) => (
               <motion.div 
                 key={plan.id}
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className={`group flex flex-col p-8 rounded-[2.5rem] glass transition-all duration-500 ${
+                viewport={{ once: true }}
+                className={`group flex flex-col p-8 rounded-[2rem] md:rounded-[2.5rem] glass transition-all duration-500 ${
                   plan.recommended 
                     ? 'border-red-600 shadow-2xl shadow-red-600/10 bg-red-600/5' 
                     : 'border-white/5 hover:border-red-600/40'
@@ -358,9 +366,9 @@ const Home: React.FC = () => {
                   </div>
                 )}
                 
-                <h3 className="text-3xl font-oswald font-black text-white mb-2 uppercase">{plan.name}</h3>
+                <h3 className="text-3xl font-oswald font-black text-white mb-2 uppercase tracking-tight">{plan.name}</h3>
                 <div className="flex items-baseline gap-1 mb-8">
-                  <span className="text-6xl font-oswald font-black text-white">{plan.price}</span>
+                  <span className="text-5xl md:text-6xl font-oswald font-black text-white">{plan.price}</span>
                   <span className="text-zinc-500 text-xs font-bold uppercase tracking-widest">/ {plan.period}</span>
                 </div>
 
@@ -390,10 +398,10 @@ const Home: React.FC = () => {
       </section>
 
       {/* Membership CTA Banner */}
-      <section className="py-32 bg-red-600 relative overflow-hidden">
+      <section className="py-20 md:py-32 bg-red-600 relative overflow-hidden">
         <motion.div 
           animate={{ rotate: 360 }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="absolute -top-24 -right-24 opacity-10 pointer-events-none"
         >
           <Trophy size={400} />
@@ -403,7 +411,7 @@ const Home: React.FC = () => {
            <motion.h2 
             initial={{ scale: 0.9, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
-            className="text-5xl md:text-8xl font-oswald font-black text-white mb-10 tracking-tight"
+            className="text-5xl md:text-8xl font-oswald font-black text-white mb-10 tracking-tight leading-none"
            >
              READY TO CRUSH YOUR LIMITS?
            </motion.h2>
@@ -411,7 +419,7 @@ const Home: React.FC = () => {
              whileHover={{ scale: 1.05 }}
              whileTap={{ scale: 0.95 }}
            >
-             <Link to="/memberships" className="inline-block bg-white text-red-600 hover:bg-zinc-950 hover:text-white px-16 py-6 rounded-2xl font-oswald font-bold text-2xl transition-all duration-300 shadow-2xl">
+             <Link to="/memberships" className="inline-block bg-white text-red-600 hover:bg-zinc-950 hover:text-white px-10 md:px-16 py-5 md:py-6 rounded-2xl font-oswald font-bold text-xl md:text-2xl transition-all duration-300 shadow-2xl">
                JOIN THE HUB
              </Link>
            </motion.div>

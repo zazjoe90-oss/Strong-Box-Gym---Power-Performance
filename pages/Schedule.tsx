@@ -30,45 +30,47 @@ const Schedule: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-950 py-24 px-4">
+    <div className="min-h-screen bg-zinc-950 py-24 px-4 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="mb-16 text-center">
-          <h1 className="text-5xl md:text-7xl font-oswald font-black mb-4">
+          <h1 className="text-5xl md:text-7xl font-oswald font-black mb-4 uppercase tracking-tight">
             {t.schedule.title} <span className="text-red-600">{t.schedule.titleRed}</span>
           </h1>
           <p className="text-zinc-400 text-lg font-light">{t.schedule.subtitle}</p>
         </div>
 
-        {/* Day Selector */}
-        <div className="flex flex-wrap justify-center gap-3 mb-16">
-          {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day, idx) => (
-            <button
-              key={day}
-              onClick={() => setSelectedDay(day)}
-              className={`px-8 py-3 rounded-xl font-oswald font-bold text-sm tracking-widest transition-all duration-300 ${
-                selectedDay === day 
-                ? 'bg-red-600 text-white shadow-xl shadow-red-600/20' 
-                : 'bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-white border border-white/5'
-              }`}
-            >
-              {dayMap[day].toUpperCase()}
-            </button>
-          ))}
+        {/* Day Selector - Horizontally scrollable on mobile */}
+        <div className="flex items-center justify-center mb-16">
+          <div className="flex flex-nowrap md:flex-wrap overflow-x-auto no-scrollbar gap-3 pb-4 max-w-full px-4 sm:px-0">
+            {['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'].map((day) => (
+              <button
+                key={day}
+                onClick={() => setSelectedDay(day)}
+                className={`flex-shrink-0 px-8 py-3 rounded-xl font-oswald font-bold text-sm tracking-widest transition-all duration-300 ${
+                  selectedDay === day 
+                  ? 'bg-red-600 text-white shadow-xl shadow-red-600/20' 
+                  : 'bg-zinc-900 text-zinc-500 hover:bg-zinc-800 hover:text-white border border-white/5'
+                }`}
+              >
+                {dayMap[day].toUpperCase()}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Schedule List */}
         <div className="grid gap-6">
           {filteredSchedule.length > 0 ? (
             filteredSchedule.map((session) => (
-              <div key={session.id} className="glass border-white/5 p-8 rounded-[2rem] flex flex-col lg:flex-row items-center justify-between gap-8 hover:border-red-600/40 transition-all group">
-                <div className="flex flex-col md:flex-row md:items-center gap-8 w-full md:w-auto">
+              <div key={session.id} className="glass border-white/5 p-6 md:p-8 rounded-[2rem] flex flex-col lg:flex-row items-center justify-between gap-8 hover:border-red-600/40 transition-all group">
+                <div className="flex flex-col md:flex-row md:items-center gap-6 md:gap-8 w-full md:w-auto text-center md:text-left rtl:md:text-right">
                   <div className="bg-zinc-950 p-6 rounded-2xl text-center min-w-[140px] border border-white/5 group-hover:bg-red-600 group-hover:border-red-600 transition-all duration-500">
                     <Clock className="w-6 h-6 mx-auto mb-2 text-red-600 group-hover:text-white" />
                     <span className="font-oswald font-black text-xl group-hover:text-white tracking-tighter">{session.time}</span>
                   </div>
                   <div>
-                    <h3 className="text-3xl font-oswald font-bold mb-3 uppercase tracking-tight">{session.name}</h3>
-                    <div className="flex flex-wrap items-center text-zinc-400 text-sm gap-6">
+                    <h3 className="text-2xl md:text-3xl font-oswald font-bold mb-3 uppercase tracking-tight leading-tight">{session.name}</h3>
+                    <div className="flex flex-wrap items-center justify-center md:justify-start text-zinc-400 text-sm gap-4 md:gap-6">
                       <span className="flex items-center font-bold tracking-wide uppercase">
                         <User size={16} className="mr-2 rtl:ml-2 rtl:mr-0 text-red-600" /> {session.trainer}
                       </span>

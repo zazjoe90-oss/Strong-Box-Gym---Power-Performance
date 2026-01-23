@@ -3,11 +3,72 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Strong Box | Power & Performance Gym</title>
+  
+  <!-- SEO Basics -->
+  <title>Strong Box Qatar | Premier High-Performance Gym & CrossFit</title>
+  <meta name="description" content="Strong Box is Doha's elite destination for CrossFit, Strength training, and performance. Join our community for world-class coaching and visible results.">
+  <meta name="keywords" content="Gym Qatar, CrossFit Doha, Strength Training Qatar, Personal Trainer Doha, Fitness Doha, Strong Box Gym">
+  <meta name="author" content="Strong Box Qatar">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.strongboxqatar.com/">
+  <meta name="theme-color" content="#dc2626">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.strongboxqatar.com/">
+  <meta property="og:title" content="Strong Box Qatar | Power & Performance Gym">
+  <meta property="og:description" content="Elite destination for CrossFit, Strength, and Mobility in Doha. Join the elite.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=1200&q=80">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://www.strongboxqatar.com/">
+  <meta property="twitter:title" content="Strong Box Qatar | Power & Performance Gym">
+  <meta property="twitter:description" content="Elite destination for CrossFit, Strength, and Mobility in Doha. Join the elite.">
+  <meta property="twitter:image" content="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=1200&q=80">
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Gym",
+      "name": "Strong Box Qatar",
+      "alternateName": "StrongBox",
+      "url": "https://www.strongboxqatar.com/",
+      "logo": "https://www.strongboxqatar.com/logo.png",
+      "image": "https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=1200&q=80",
+      "description": "The premier high-performance fitness center in Doha, Qatar focusing on CrossFit, Strength and Conditioning.",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Al Jazi Gardens, West Bay",
+        "addressLocality": "Doha",
+        "addressCountry": "QA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 25.3176,
+        "longitude": 51.5268
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Saturday", "Sunday"],
+          "opens": "06:00",
+          "closes": "21:00"
+        }
+      ],
+      "sameAs": [
+        "https://www.facebook.com/strongboxqatar",
+        "https://www.instagram.com/strongboxqatar",
+        "https://www.youtube.com/channel/UCWkvbZLSVElXym9KHtiqTrg"
+      ]
+    }
+  </script>
+
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Oswald:wght@500;700&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&family=Oswald:wght@500;700;900&family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --primary: #dc2626;
@@ -23,6 +84,8 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
     h1, h2, h3, h4, .font-oswald {
       font-family: 'Oswald', sans-serif;
@@ -48,6 +111,13 @@
       background: #dc2626;
       border-radius: 10px;
     }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
     .text-glow {
       text-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
     }
@@ -60,16 +130,6 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-    }
-    .hero-gradient {
-      background: radial-gradient(circle at top right, rgba(220, 38, 38, 0.15), transparent 50%);
-    }
-    /* Interactive card animations */
-    .hover-lift {
-      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    }
-    .hover-lift:hover {
-      transform: translateY(-8px);
     }
   </style>
 <script type="importmap">
